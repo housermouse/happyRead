@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.happyread.mapper.OptionMapper">
+    <resultMap id="resultMap" type="com.wx.happyread.model.Option">
+        <result property="questionId" column="question_id"/>
+        <result property="optionId" column="option_id"/>
+        <result property="correctOption" column="correct_option"/>
+        <result property="optionDescribe" column="option_describe"/>
+        <result property="optionType" column="option_type"/>
+
+    </resultMap>
+    <select id="getCurrectOption" resultMap="resultMap">
+        select * from t_option where question_id = #{questionId} and correct_option = 1
+    </select>
+
+
+</mapper>

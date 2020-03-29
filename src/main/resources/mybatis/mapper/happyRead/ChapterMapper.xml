@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.happyread.mapper.ChapterMapper">
+<resultMap id="resultMap" type="com.wx.happyread.model.Chapter">
+    <result property="chapterId" column="chapter_id"/>
+    <result property="chapterName" column="chapter_name"/>
+</resultMap>
+<select id="selectChapterList" resultMap="resultMap">
+        select * from t_chapter where summary_id = #{summaryId}
+    </select>
+</mapper>

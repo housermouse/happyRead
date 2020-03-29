@@ -1,0 +1,23 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    #Mysql Setting
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://120.77.250.66:3306/happyread?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: abc***123
+    validationQuery: select 1
+
+    # Common Setting
+    initialSize: 20
+    maxActive: 150
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 100
+
+mybatis-plus:
+  # 此处有坑 单模块加载也需要配置*(classpath 紧挨着的星) 解决自定义SQL无法执行
+  mapper-locations: classpath*:mybatis/mapper/*/*Mapper.xml
