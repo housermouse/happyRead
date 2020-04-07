@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +26,14 @@ public class ErrorBankService {
     @Resource
     OptionMapper optionMapper;
 
+    @Resource
+    QuestionMapper questionMapper;
+
     public JSONObject selectErrorBank(JSONObject jsonObject){
         JSONObject result = new JSONObject();
         result.put("code",1);
         result.put("note","成功");
+        List<Question>questionList = new ArrayList<>();
         try {
             String chapter_id = jsonObject.getString("chapterId");
             String status = jsonObject.getString("status");
@@ -42,7 +47,18 @@ public class ErrorBankService {
                 wrapper.eq("chapter_id",chapter_id);
                 wrapper.eq("user_name",userName);
                 wrapper.eq("status",StringUtils.isBlank(status)?1:status);
-                result.put("data",errorBankMapper.selectList(wrapper));
+                List<ErrorBank> errorBanks = errorBankMapper.selectList(wrapper);
+                for(ErrorBank errorBank:errorBanks){
+                    Question question = questionMapper.getByQuestionId(errorBank.getQuestionId());
+                    EntityWrapper optionWrapper = new EntityWrapper<Option>();
+                    optionWrapper.eq("question_id",question.getQuestionId());
+                    List<Option> options = optionMapper.selectList(optionWrapper);
+                    if(options!=null){
+                        question.setOptions(options);
+                    }
+                    questionList.add(question);
+                }
+                result.put("list",questionList);
             }
         }catch (Exception e){
             result.put("code",-1);
