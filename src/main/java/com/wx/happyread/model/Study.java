@@ -6,25 +6,22 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
-
+@TableName("t_study")
 @Data
-@TableName("t_feedback")
-public class Feedback {
+public class Study {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    @TableField("feedback_content")
-    private String feedbackContent;
+    @TableField("study_id")
+    private String studyId;
 
-    @TableField("create_time")
-    private Long createTime;
+    @TableField("chapter_id")
+    private String chapterId;
 
-    @TableField("user_name")
-    private String userName;
+    @TableField("video_src")
+    private String videoSrc;
 
-    @TableField("status")
-    private Integer status;
-
-
+    @TableField("document_src")
+    private String documentSrc;
 }
